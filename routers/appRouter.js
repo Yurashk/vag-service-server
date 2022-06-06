@@ -1,0 +1,21 @@
+const Router = require("express")
+const appRouter = new Router()
+const coffeeController = require("../controllers/coffeeController")
+const userController = require("../controllers/userController")
+const carsController = require("../controllers/carsController")
+const {check} = require("express-validator")
+const authMiddleware = require("../middleware/authMiddleware")
+
+appRouter.get("/users/:id", authMiddleware, userController.getOneUser)
+appRouter.patch("/users/add-bonuses", authMiddleware, userController.addUserBonuses)
+appRouter.patch("/users/spend-bonuses", authMiddleware, userController.removeUserBonuses)
+appRouter.patch("/changeCarItems", authMiddleware, carsController.changeCarItemsById)
+appRouter.patch("/addNewWorks", authMiddleware, carsController.addWorkCarItemsById)
+appRouter.get("/coffee", authMiddleware, coffeeController.getCoffeeItems)
+appRouter.post("/coffee", [check("name", "name не может быть пустым").notEmpty()], authMiddleware, coffeeController.createCoffeeItems)
+appRouter.post("/carCreate", [check("name", "name не может быть пустым").notEmpty()], authMiddleware, carsController.createCarItem)
+appRouter.get("/getUserCars/:id", authMiddleware, carsController.getCarItemsByUser)
+appRouter.get("/getCar/:id", authMiddleware, carsController.getCarItemsById)
+appRouter.get("/getAllCars", authMiddleware, carsController.getAllCars)
+
+module.exports = appRouter
