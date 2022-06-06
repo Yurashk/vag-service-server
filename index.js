@@ -6,7 +6,7 @@ const appRouter = require("./routers/appRouter")
 const app = express()
 const PORT = process.env.PORT || 5000
 const corsMiddleware = require("./middleware/cors.middleware")
-
+const path=require('path')
 
 app.use(corsMiddleware)
 app.use(express.json())
