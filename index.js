@@ -12,6 +12,7 @@ app.use(corsMiddleware)
 app.use(express.json())
 app.use("/auth", authRouter)
 app.use("/app", appRouter)
+app.use(express.static(path.join(__dirname, 'public')));
 
 const start = async () => {
     try {
