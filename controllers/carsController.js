@@ -5,7 +5,7 @@ class carsController {
     async createCarItem(req, res) {
         try {
             const {name, ownerPhone, photoUrl, works, vinCode, gosNumber} = req.body; // get params from request
-            const user = await User.findOne({ownerPhone});
+            const user = await User.findOne({'phone':ownerPhone});
             if (!user) {
                 return res.status(404).json({message: `Пользователя с ${ownerPhone} не существует`})
             }
