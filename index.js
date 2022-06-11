@@ -9,7 +9,7 @@ const app = express()
 const PORT = process.env.PORT || 5000
 const corsMiddleware = require("./middleware/cors.middleware")
 const path=require('path')
-
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 app.use(corsMiddleware)
 app.use(express.json())
 app.use("/auth", authRouter)
