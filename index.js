@@ -1,6 +1,8 @@
 const express = require("express")
 const mongoose = require("mongoose")
 // const config = require("config")
+const https=require('https')
+const fs=require('fs')
 const authRouter = require("./routers/authRouter")
 const appRouter = require("./routers/appRouter")
 const app = express()
@@ -14,10 +16,15 @@ app.use("/auth", authRouter)
 app.use("/app", appRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 
+const sslServer=https.createServer({
+    key:fs.readFileSync(path.join(__dirname,'cert','key.pem')),
+    cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
+},app)
 const start = async () => {
     try {
         await mongoose.connect(`mongodb+srv://yurashk:92Ozuzud@cluster0.cobjhb1.mongodb.net/?retryWrites=true&w=majority`)
-        app.listen(PORT, () => console.log(`server started at ${PORT} port`))
+        sslServer.listen(PORT,()=> console.log(`server started at ${PORT} port`))
+        // app.listen(PORT, () => console.log(`server started at ${PORT} port`))
     } catch (e) {
         console.log(e)
     }
