@@ -9,7 +9,6 @@ const app = express()
 const PORT = process.env.PORT || 5000
 const corsMiddleware = require("./middleware/cors.middleware")
 const path=require('path')
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 app.use(corsMiddleware)
 app.use(express.json())
 app.use("/auth", authRouter)
@@ -17,6 +16,7 @@ app.use("/app", appRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 
 const sslServer=https.createServer({
+    rejectUnauthorized: false,
     key:fs.readFileSync(path.join(__dirname,'cert','key.pem')),
     cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
 },app)
