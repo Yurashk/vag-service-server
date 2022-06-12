@@ -1,4 +1,4 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 const express = require("express")
 const mongoose = require("mongoose")
 // const config = require("config")
@@ -17,14 +17,15 @@ app.use("/app", appRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 
 const sslServer=https.createServer({
-    rejectUnauthorized: false,
+    NODE_TLS_REJECT_UNAUTHORIZED : '0',
     key:fs.readFileSync(path.join(__dirname,'cert','key.pem')),
     cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
 },app)
+browser = await puppeteer.launch({ headless: false, slowMo: 250, ignoreHTTPSErrors: true });
 const start = async () => {
     try {
         await mongoose.connect(`mongodb+srv://yurashk:92Ozuzud@cluster0.cobjhb1.mongodb.net/?retryWrites=true&w=majority`)
-        sslServer.listen(PORT,()=> console.log(`server started at ${PORT} port`))
+        sslServer.listen(5000,()=> console.log(`server started at ${PORT} port`))
         // app.listen(PORT, () => console.log(`server started at ${PORT} port`))
     } catch (e) {
         console.log(e)
