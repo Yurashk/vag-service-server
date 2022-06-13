@@ -16,12 +16,12 @@ app.use("/app", appRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 
 const sslServer = https.createServer({
-    rejectUnauthorized: false,
+
     // key:fs.readFileSync(path.join(__dirname,'cert','key.pem')),
     // cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
-    key: fs.readFileSync(path.join(__dirname, 'cert', 'server-key.pem')),
-    cert: fs.readFileSync(path.join(__dirname, 'cert', 'server-crt.pem')),
-    ca: fs.readFileSync(path.join(__dirname, 'cert', 'ca-crt.pem')),
+    key: fs.readFileSync('/etc/letsencrypt/live/vag-cars.in.ua/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/vag-cars.in.ua/cert.pem'),
+    ca: fs.readFileSync('/etc/letsencrypt/live/vag-cars.in.ua/chain.pem'),
 }, app)
 
 const start = async () => {
