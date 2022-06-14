@@ -47,7 +47,7 @@ class carsController {
             if (!car) {
                 return res.status(404).json({message: `Машина відсутня`})
             }
-            // car.works = works;
+            car.works = works;
             car.worksInProgress = worksInProgress;
             car.worksDone = worksDone;
             await car.save();
