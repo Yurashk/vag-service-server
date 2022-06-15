@@ -50,7 +50,7 @@ class authController {
                 return res.status(400).json({message: `Пароль не верный`})
             }
             // const token = jwt.sign({id: user.id}, config.get('secret'),{expiresIn: "1h"})
-            const token = generateAccessToken(user._id,user.phone)
+            const token = generateAccessToken(user._id, user.phone)
 
             return res.json({
                 access_token: token
@@ -69,6 +69,7 @@ class authController {
             console.log(e)
         }
     }
+
     // async getOneUser(req,res) {
     //     try {
     //

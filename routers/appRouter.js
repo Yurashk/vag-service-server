@@ -15,6 +15,7 @@ appRouter.get("/coffee", authMiddleware, coffeeController.getCoffeeItems)
 appRouter.post("/coffee", [check("name", "name не может быть пустым").notEmpty()], authMiddleware, coffeeController.createCoffeeItems)
 appRouter.post("/carCreate", [check("name", "name не может быть пустым").notEmpty()], authMiddleware, carsController.createCarItem)
 appRouter.get("/getUserCars/:id", authMiddleware, carsController.getCarItemsByUser)
+appRouter.delete("/deleteUserCars/:id", authMiddleware, carsController.deleteCarItemsById)
 appRouter.get("/getCar/:id", authMiddleware, carsController.getCarItemsById)
 appRouter.get("/getAllCars", authMiddleware, carsController.getAllCars)
 
