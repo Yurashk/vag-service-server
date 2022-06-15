@@ -15,20 +15,20 @@ app.use("/auth", authRouter)
 app.use("/app", appRouter)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// const sslServer = https.createServer({
-//
-//     // key:fs.readFileSync(path.join(__dirname,'cert','key.pem')),
-//     // cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
-//     key: fs.readFileSync('/etc/letsencrypt/live/vag-cars.in.ua/privkey.pem'),
-//     cert: fs.readFileSync('/etc/letsencrypt/live/vag-cars.in.ua/cert.pem'),
-//     ca: fs.readFileSync('/etc/letsencrypt/live/vag-cars.in.ua/chain.pem'),
-// }, app)
+const sslServer = https.createServer({
+
+    // key:fs.readFileSync(path.join(__dirname,'cert','key.pem')),
+    // cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
+    key: fs.readFileSync('/etc/letsencrypt/live/vag-cars.in.ua/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/vag-cars.in.ua/cert.pem'),
+    ca: fs.readFileSync('/etc/letsencrypt/live/vag-cars.in.ua/chain.pem'),
+}, app)
 
 const start = async () => {
     try {
         await mongoose.connect(`mongodb+srv://yurashk:92Ozuzud@cluster0.cobjhb1.mongodb.net/?retryWrites=true&w=majority`)
-        // sslServer.listen(5000, () => console.log(`server started at ${PORT} port`))
-        app.listen(PORT, () => console.log(`server started at ${PORT} port`))
+        sslServer.listen(5000, () => console.log(`server started at ${PORT} port`))
+        // app.listen(PORT, () => console.log(`server started at ${PORT} port`))
     } catch (e) {
         console.log(e)
     }
