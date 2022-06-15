@@ -1,16 +1,20 @@
 const Car = require("../models/Car")
 const User = require("../models/User")
+const TelegramApi = require("node-telegram-bot-api")
+const bot_token = '5180143875:AAFuA6x8HhDeyKGcmxoP3cBRJaWcHk8lMUc'
+const bot = new TelegramApi(bot_token, {polling: true})
 
 class carsController {
     async createCarItem(req, res) {
         try {
             const {name, ownerPhone, photoUrl, works, vinCode, gosNumber} = req.body; // get params from request
-            const user = await User.findOne({'phone':ownerPhone});
+            const user = await User.findOne({'phone': ownerPhone});
             if (!user) {
                 return res.status(404).json({message: `Пользователя с ${ownerPhone} не существует`})
             }
             const car = new Car({name, userId: user.id, ownerPhone, photoUrl, works, vinCode, gosNumber}); // create user
             await car.save() // save user
+
             return res.json({message: "Машину успішно збережено"})
         } catch (e) {
             console.log(e);
@@ -41,7 +45,7 @@ class carsController {
 
     async changeCarItemsById(req, res) {
         try {
-            const {id, works, worksInProgress, worksDone} = req.body;
+            const {id,name, works, worksInProgress, worksDone} = req.body;
             let car = await Car.findById(id)
             console.log(car)
             if (!car) {
@@ -50,6 +54,10 @@ class carsController {
             car.works = works;
             car.worksInProgress = worksInProgress;
             car.worksDone = worksDone;
+            if(!car.works.length && !car.worksInProgress.length){
+                await bot.sendMessage(-1001775833457, `По авто ${name} виконані всі роботи!`);
+            }
+            else await bot.sendMessage(-1001775833457, `Зміни по авто:${name}!`);
             await car.save();
             res.json(car)
         } catch (e) {
