@@ -25,7 +25,6 @@ class coffeeController {
 
     async getCoffeeItems(req, res) {
         try {
-
             const coffees = await Coffee.find()
             res.json(coffees)
         } catch (e) {

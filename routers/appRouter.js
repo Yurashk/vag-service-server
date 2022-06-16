@@ -3,6 +3,7 @@ const appRouter = new Router()
 const coffeeController = require("../controllers/coffeeController")
 const userController = require("../controllers/userController")
 const carsController = require("../controllers/carsController")
+const historyController = require("../controllers/historyController")
 const {check} = require("express-validator")
 const authMiddleware = require("../middleware/authMiddleware")
 
@@ -18,5 +19,7 @@ appRouter.get("/getUserCars/:id", authMiddleware, carsController.getCarItemsByUs
 appRouter.delete("/deleteUserCars/:id", authMiddleware, carsController.deleteCarItemsById)
 appRouter.get("/getCar/:id", authMiddleware, carsController.getCarItemsById)
 appRouter.get("/getAllCars", authMiddleware, carsController.getAllCars)
+appRouter.get("/getUserHistory/:id", authMiddleware, historyController.getUserHistory)
+appRouter.post("/createUserHistory", authMiddleware, historyController.createUserHistory)
 
 module.exports = appRouter
