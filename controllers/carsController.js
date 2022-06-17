@@ -1,8 +1,8 @@
 const Car = require("../models/Car")
 const User = require("../models/User")
-// const TelegramApi = require("node-telegram-bot-api")
-// const bot_token = '5180143875:AAFuA6x8HhDeyKGcmxoP3cBRJaWcHk8lMUc'
-// const bot = new TelegramApi(bot_token, {polling: true})
+const TelegramApi = require("node-telegram-bot-api")
+const bot_token = '5180143875:AAFuA6x8HhDeyKGcmxoP3cBRJaWcHk8lMUc'
+const bot = new TelegramApi(bot_token, {polling: true})
 
 class carsController {
     async createCarItem(req, res) {
@@ -63,10 +63,10 @@ class carsController {
             car.works = works;
             car.worksInProgress = worksInProgress;
             car.worksDone = worksDone;
-            // if(!car.works.length && !car.worksInProgress.length){
-            //     await bot.sendMessage(-1001775833457, `По авто ${name} виконані всі роботи!`);
-            // }
-            // else await bot.sendMessage(-1001775833457, `Зміни по авто:${name}!`);
+            if(!car.works.length && !car.worksInProgress.length){
+                await bot.sendMessage(-1001775833457, `По авто ${name} виконані всі роботи!`);
+            }
+            else await bot.sendMessage(-1001775833457, `Зміни по авто:${name}!`);
             await car.save();
             res.json(car)
         } catch (e) {
