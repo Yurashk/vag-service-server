@@ -35,7 +35,7 @@ class carsController {
     async deleteCarItemsById(req, res) {
         try {
             const id = req.params.id;
-            const cars = await Car.deleteOne({id: id})
+            const cars = await Car.deleteOne({_id: id})
             res.json(cars)
         } catch (e) {
             console.log(e)
